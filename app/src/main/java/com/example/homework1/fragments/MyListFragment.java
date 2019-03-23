@@ -8,16 +8,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.example.homework1.R;
+import com.example.homework1.activities.MainActivity;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MyListFragment extends Fragment {
 
@@ -30,8 +31,8 @@ public class MyListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDataSize = (savedInstanceState == null)? 100 : savedInstanceState.getInt("Numcount", 100);
-        Log.d("FUCK", "onCreate");
+        mDataSize = (savedInstanceState == null) ? 100 : savedInstanceState.getInt("Numcount", 100);
+        makeNumbers(mNumbers);
     }
 
     @Nullable
@@ -41,7 +42,6 @@ public class MyListFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.num_list);
         mAddButton = view.findViewById(R.id.add_number);
         mNumCount = view.findViewById(R.id.num_count);
-        Log.d("FUCK", "onCreateView");
         return view;
     }
 
@@ -49,17 +49,13 @@ public class MyListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //Define sources
-        makeNumbers(mNumbers);
-
         final int currentOrient = getResources().getConfiguration().orientation;
-        final int spanCount = (currentOrient == Configuration.ORIENTATION_PORTRAIT)? 3 : 4;
+        final int spanCount = (currentOrient == Configuration.ORIENTATION_PORTRAIT) ? 3 : 4;
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(new NumAdapter(mNumbers));
         mNumCount.setText(String.valueOf(mRecyclerView.getAdapter().getItemCount()));
-        Log.d("FUCK", "onActivityCreated");
     }
 
     @Override
@@ -74,18 +70,15 @@ public class MyListFragment extends Fragment {
                 mNumCount.setText(String.valueOf(++mDataSize));
             }
         });
-        Log.d("FUCK", "onResume");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("Numcount", mNumbers.size());
-        Log.d("FUCK", "onSaveInstanceState");
     }
 
     void makeNumbers(List<String> numbers) {
-
         for (int i = 1; i <= mDataSize; i++) {
             numbers.add(i + "");
         }
@@ -95,10 +88,16 @@ public class MyListFragment extends Fragment {
 
         TextView mTextView;
 
-        public NumViewHolder(@NonNull View itemView) {
+        NumViewHolder(@NonNull View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.num);
-            Log.d("FUCK", "NumViewHolder");
+            mTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.showNumber(Integer.parseInt(mTextView.getText().toString()));
+                }
+            });
         }
     }
 
@@ -113,7 +112,6 @@ public class MyListFragment extends Fragment {
         @NonNull
         @Override
         public NumViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            Log.d("FUCK", "onCreateViewHolder");
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
             View view = inflater.inflate(R.layout.list_element, viewGroup, false);
             return new NumViewHolder(view);
@@ -122,11 +120,10 @@ public class MyListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull NumViewHolder numViewHolder, int i) {
             Resources res = getResources();
-            int color = (i%2 != 0)? res.getColor(R.color.colorRed)
+            int color = (i % 2 != 0) ? res.getColor(R.color.colorRed)
                     : res.getColor(R.color.colorBlue);
             numViewHolder.mTextView.setText(mNumbers.get(i));
             numViewHolder.mTextView.setTextColor(color);
-            Log.d("FUCK", "onBindViewHolder");
         }
 
         @Override
