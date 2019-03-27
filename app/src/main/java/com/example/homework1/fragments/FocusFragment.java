@@ -9,17 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.homework1.R;
 
 public class FocusFragment extends Fragment {
 
+    public final static String KEY_NUMBER = "Number";
     private int mNumber;
 
     public static FocusFragment newInstance(int number) {
         FocusFragment focusFragment = new FocusFragment();
         Bundle argument = new Bundle();
-        argument.putInt("Number", number);
+        argument.putInt(KEY_NUMBER, number);
         focusFragment.setArguments(argument);
         return focusFragment;
     }
@@ -27,7 +27,7 @@ public class FocusFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNumber = getArguments().getInt("Number", -1);
+        mNumber = getArguments().getInt(KEY_NUMBER, -1);
     }
 
     @Nullable

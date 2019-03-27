@@ -13,15 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.homework1.R;
 import com.example.homework1.activities.MainActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyListFragment extends Fragment {
 
+    public final static String KEY_NUMCOUNT = "Numcount";
     private ArrayList<String> mNumbers = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private Button mAddButton;
@@ -31,7 +30,7 @@ public class MyListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDataSize = (savedInstanceState == null) ? 100 : savedInstanceState.getInt("Numcount", 100);
+        mDataSize = (savedInstanceState == null) ? 100 : savedInstanceState.getInt(KEY_NUMCOUNT, 100);
         makeNumbers(mNumbers);
     }
 
@@ -75,7 +74,7 @@ public class MyListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("Numcount", mNumbers.size());
+        outState.putInt(KEY_NUMCOUNT, mNumbers.size());
     }
 
     void makeNumbers(List<String> numbers) {
