@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.example.homework1.R;
 import com.example.homework1.fragments.FocusFragment;
 import com.example.homework1.fragments.MyListFragment;
@@ -31,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showNumber(int number) {
+    public void showNumber(int number, int color) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
 
         if (currentFragment instanceof MyListFragment) {
-            transaction.replace(R.id.fragment_container, FocusFragment.newInstance(number));
+            transaction.replace(R.id.fragment_container, FocusFragment.newInstance(number, color));
             transaction.addToBackStack(null);
         }
         transaction.commit();

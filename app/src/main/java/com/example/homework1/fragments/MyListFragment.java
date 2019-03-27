@@ -94,7 +94,7 @@ public class MyListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     MainActivity mainActivity = (MainActivity) getActivity();
-                    mainActivity.showNumber(Integer.parseInt(mTextView.getText().toString()));
+                    mainActivity.showNumber(Integer.parseInt(mTextView.getText().toString()), mTextView.getCurrentTextColor());
                 }
             });
         }
