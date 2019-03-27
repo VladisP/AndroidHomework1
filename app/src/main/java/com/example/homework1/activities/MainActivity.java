@@ -9,7 +9,7 @@ import com.example.homework1.R;
 import com.example.homework1.fragments.FocusFragment;
 import com.example.homework1.fragments.MyListFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
