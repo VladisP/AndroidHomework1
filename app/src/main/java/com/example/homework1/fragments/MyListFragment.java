@@ -1,5 +1,6 @@
 package com.example.homework1.fragments;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.homework1.R;
-import com.example.homework1.activities.MainActivity;
+import com.example.homework1.activities.OnItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,14 @@ public class MyListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private Button mAddButton;
     private TextView mNumCount;
+    private OnItemSelectedListener onItemSelectedListener;
     private int mDataSize;
+
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        onItemSelectedListener = (OnItemSelectedListener) activity;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,8 +101,7 @@ public class MyListFragment extends Fragment {
             mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    mainActivity.showNumber(Integer.parseInt(mTextView.getText().toString()), mTextView.getCurrentTextColor());
+                    onItemSelectedListener.showNumber(Integer.parseInt(mTextView.getText().toString()), mTextView.getCurrentTextColor());
                 }
             });
         }
