@@ -1,6 +1,6 @@
 package com.example.homework1.fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -29,9 +29,8 @@ public class MyListFragment extends Fragment {
     private OnItemSelectedListener onItemSelectedListener;
     private int mDataSize;
 
-    @SuppressWarnings("deprecation")
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         onItemSelectedListener = (OnItemSelectedListener) activity;
     }
